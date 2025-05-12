@@ -47,4 +47,37 @@ for _, obj in ipairs(workspace:GetChildren()) do
 end
 */ 
 
+--teleport to specific location (currently hardcoded) 
+local player = game.Players.LocalPlayer -- name of the user
+
+local function teleportPlayer(player, position)
+    local character = player.Character
+    if character then
+        local findChild = character:FindFirstChild("HumanoidRootPart") --find the humanoid root part if not then returns nil
+        if findChild then
+            findChild.CFrame = CFrame.new(position) 
+        end
+    end
+end
+
+teleportPlayer(player, Vector3.new(-3, 10, -79))
+
+local player = game.Players.LocalPlayer  --get player object (name etc)
+local npc = Workspace.NPCS.Steven  -- NPC object name
+
+-- teleport to selling npc
+local function teleportToSteven()
+    local humanoidRootPart = npc:WaitForChild("HumanoidRootPart")
+
+    if humanoidRootPart then
+        local targetPosition = humanoidRootPart.Position  -- get the position of Steven
+        local character = player.Character or player.CharacterAdded:Wait()
+
+        -- Teleport the player by setting the player's HumanoidRootPart position
+        local findChild = character:WaitForChild("HumanoidRootPart")
+        hrp.CFrame = CFrame.new(targetPosition)  -- Teleport the player to Steven's position
+    end
+end
+
+teleportToSteven()
 
